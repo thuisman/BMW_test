@@ -1,0 +1,14 @@
+name: "Leerlijn Data Science"
+output_dir: "../docs/main"
+navbar:
+  title: "Leerlijn Data Science"
+  left:
+    - text: "Oog voor Impact"
+      href: https://umcugenetics.github.io/BachelorBMW/oogvoorimpact
+    - text: "Onderzoeksmethoden"
+      href: https://umcugenetics.github.io/BachelorBMW/onderzoeksmethoden
+    - text: "Bioinformatica"
+      href: https://umcugenetics.github.io/BachelorBMW/bioinformatica
+output:
+  html_document:
+    theme: cosmo

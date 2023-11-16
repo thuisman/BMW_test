@@ -1,0 +1,24 @@
+name: "Ondezoeksmethoden"
+output_dir: "../docs/ondezoeksmethoden/"
+navbar:
+  title: "Intro R"
+  left:
+    - text: "Leerlijn DS"
+      href: https://umcugenetics.github.io/BachelorBMW
+    - text: "COO1"
+      href: COO1.html
+    - text: "COO2"
+      href: COO2.html
+    - text: "COO3"
+      href: COO3.html
+    - text: "COO4"
+      href: COO4.html
+    - text: "Statistiek 1"
+      href: Werkcollege_statistiek_Thema_1.html
+    - text: "Statistiek 2"
+      href: Werkcollege_statistiek_Thema_2.html
+    - text: "Statistiek 3"
+      href: Werkcollege_statistiek_Thema_3.html
+output:
+  html_document:
+    theme: cosmo
