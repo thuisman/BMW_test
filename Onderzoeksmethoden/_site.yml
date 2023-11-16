@@ -1,5 +1,5 @@
 name: "Ondezoeksmethoden"
-output_dir: "../docs/ondezoeksmethoden/"
+output_dir: "../docs/OvI/"
 navbar:
   title: "Intro R"
   left:

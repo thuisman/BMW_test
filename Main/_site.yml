@@ -4,11 +4,11 @@ navbar:
   title: "Leerlijn Data Science"
   left:
     - text: "Oog voor Impact"
-      href: https://umcugenetics.github.io/BachelorBMW/oogvoorimpact
+      href: https://umcugenetics.github.io/BachelorBMW/OvI
     - text: "Onderzoeksmethoden"
-      href: https://umcugenetics.github.io/BachelorBMW/onderzoeksmethoden
+      href: https://umcugenetics.github.io/BachelorBMW/OZM
     - text: "Bioinformatica"
-      href: https://umcugenetics.github.io/BachelorBMW/bioinformatica
+      href: https://umcugenetics.github.io/BachelorBMW/BioInf
 output:
   html_document:
     theme: cosmo
