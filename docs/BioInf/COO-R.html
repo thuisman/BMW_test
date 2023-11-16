@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="T Huisman" />
+
+
+<title>COO R</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bioinformatica</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="https://umcugenetics.github.io/BachelorBMW">Leerlijn DS</a>
+</li>
+<li>
+  <a href="COO-R.html">COO-R</a>
+</li>
+<li>
+  <a href="placeholder.html">PLACEHOLDER</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">COO R</h1>
+<h4 class="author">T Huisman</h4>
+<h4 class="date">2/2/2023</h4>
+
+</div>
+
+
+<div id="intro" class="section level2">
+<h2>Intro</h2>
+<p>Voorkennis is terug te zien op <strong>Blackboard &gt;&gt; Course
+content &gt;&gt; Voorkennis &gt;&gt; Onderzoeksmethoden</strong>. Zie
+ook de cheatsheet op Blackboard.</p>
+<p>In de volgende onderdelen gaan we over de basics van R. Vergeet niet
+dat je zelf het een en ander kunt opzoeken over R code en functies. De
+Help Panel van Rstudio kan het gebruik van specifieke functies verder
+toelichten.</p>
+<p><strong>Werk in de code editor en sla je R code op in een bestand,
+zodat je uiteindelijk een volledig script hebt.</strong> Je kunt stukken
+code uit dit document kopiëren en in je script plakken. Voeg commentaar
+toe waar nodig.</p>
+</div>
+<div id="outline" class="section level2">
+<h2>Outline</h2>
+<ul>
+<li><strong>(Algemeen)</strong>
+<ul>
+<li>De student kan een basic R script opstellen en bewerken in
+Rstudio</li>
+<li>De student kan plots, data, en scripts opslaan en beheren</li>
+</ul></li>
+<li><strong>Variabelen en Data Structuren</strong>
+<ul>
+<li>De student kan variabelen aanmaken en gebruiken</li>
+</ul></li>
+<li><strong>Functies</strong>
+<ul>
+<li>De student kan functies toepassen en de juiste argumenten
+invullen</li>
+</ul></li>
+<li><strong>Data Inladen</strong>
+<ul>
+<li>De student kan verschillende data bestanden inladen</li>
+</ul></li>
+<li><strong>Subset</strong>
+<ul>
+<li>De student kan een subset of selectie maken uit data</li>
+</ul></li>
+<li><strong>Plot</strong>
+<ul>
+<li>De student kan simpele plots maken en instellen</li>
+</ul></li>
+<li><strong>%in% Operator</strong>
+<ul>
+<li>De student begrijpt de %in% operator</li>
+</ul></li>
+<li><strong>Iteratie</strong>
+<ul>
+<li>De student kan looping functies <code>apply()</code>,
+<code>lapply()</code>, <code>sapply()</code>, etc. toepassen</li>
+<li>De student begrijpt simpele for-loops en kan ze uitleggen en
+aanpassen</li>
+</ul></li>
+</ul>
+</div>
+<div id="variabelen-en-data-structuren" class="section level2">
+<h2>Variabelen en Data Structuren</h2>
+<p>Variabelen zijn eenvoudig te maken en te gebruiken.</p>
+<pre class="r"><code>foobar &lt;- &quot;Hello, World!&quot;
+foobar</code></pre>
+<pre><code>## [1] &quot;Hello, World!&quot;</code></pre>
+<p><strong>Q1) Maak een vector met nummers van 1 tot en met 10 en sla
+deze op in een variable met de naam <code>numbers</code>.</strong></p>
+<p><strong>Q2) Vermenigvuldig de variabele <code>numbers</code> met
+<code>2</code> en sla de uitkomst op in een nieuwe variabele met de naam
+<code>numbers2</code>.</strong></p>
+<p><strong>Q3) Maak een vector met de character waarden:
+<code>"alpha"</code>, <code>"beta"</code>,
+<code>"gamma"</code>.</strong></p>
+<p><strong>Q4) Maak een matrix van 3x3 met de nummers 1 tot en met 9 van
+links naar rechts en boven naar onder (net als een telefoon keypad). De
+output moet eruitzien zoals hieronder weergegeven:</strong></p>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    4    5    6
+## [3,]    7    8    9</code></pre>
+<p><strong>(OPTIONAL) Q5) Er zijn vaak meerdere manieren om iets te
+maken in R. Het is mogelijk om met elk van de de volgende functies de
+matrix te bouwen: <code>matrix()</code>, <code>rbind()</code>, en
+<code>cbind()</code>. Geef de code voor iedere afzonderlijke functie met
+de output die is weergegeven bij vraag Q4.</strong></p>
+<p><strong>Q6) Maak een list met een combinatie van
+<code>"numeric"</code>, <code>"character"</code>, en
+<code>"logical"</code> type waarden.</strong></p>
+<p><strong>(OPTIONAL) Q7) Maak een list met nummers 0 tot en met 9 als
+element <code>[[1]]</code> en letters A tot en met Z als element
+<code>[[2]]</code>. De output moet eruitzien zoals hieronder
+weergegeven. Let op, er is al een vector met de letters van het alfabet
+ingebouwd in R. Zoek naar Constants in de R helpdocumentatie
+(<code>?Constants</code>).</strong></p>
+<pre><code>## [[1]]
+##  [1] 0 1 2 3 4 5 6 7 8 9
+## 
+## [[2]]
+##  [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;J&quot; &quot;K&quot; &quot;L&quot; &quot;M&quot; &quot;N&quot; &quot;O&quot;
+## [16] &quot;P&quot; &quot;Q&quot; &quot;R&quot; &quot;S&quot; &quot;T&quot; &quot;U&quot; &quot;V&quot; &quot;W&quot; &quot;X&quot; &quot;Y&quot; &quot;Z&quot;</code></pre>
+<p><strong>Q8) Maak een data.frame zoals hieronder weergegeven. Column
+<code>Name</code> moet <code>"character"</code> type zijn. Column
+<code>Grade</code> moet <code>"numeric"</code> type zijn.</strong></p>
+<pre><code>##    Name Grade
+## 1   Tom   8.2
+## 2 Jerry   4.6
+## 3 Spike   7.1</code></pre>
+</div>
+<div id="functies" class="section level2">
+<h2>Functies</h2>
+<p>Het is belangrijk de juiste functies en argumenten te gebruiken.</p>
+<p><strong>Q9) Maak met behulp van een bestaande functie een vector met
+nummers die start op <code>7</code> en eindigt op <code>63</code> in
+stappen van <code>7</code>.</strong></p>
+<p>Dit volgende voorbeeld genereert een willekeurig getal tussen
+<code>5</code> en <code>99</code>.</p>
+<pre class="r"><code>sample(5:99, 1)</code></pre>
+<pre><code>## [1] 10</code></pre>
+<p><strong>Q10) Zoek de help documentatie van <code>sample()</code> op.
+Hoe kunnen we in één keer <code>150</code> zulke willekerige getallen
+uit de <code>5:99</code> sequentie sampelen? Welke argumenten moeten we
+aan de functie meegeven (en waarom)?</strong></p>
+<p><strong>Q11) Wat doet de <code>rev()</code> functie?</strong></p>
+</div>
+<div id="data-inladen" class="section level2">
+<h2>Data Inladen</h2>
+<p>Het inladen van data is vaak het begin van onderzoek in R. Het is
+belangrijk dat we goed beginnen. Hier gebruiken we de
+<code>iris_dataset.csv</code>:</p>
+<p><strong>Blackboard &gt;&gt; Course content &gt;&gt; Intro R -
+herhaling &gt;&gt; <code>iris_dataset.csv</code></strong></p>
+<p><strong>Q12) Laad de <code>iris_dataset.csv</code> in. Wat is de
+separator character? Is er een header line?</strong></p>
+<p><strong>Q13) Inspecteer de data met functies als <code>head()</code>
+en <code>str()</code>. Is het goed ingeladen?</strong></p>
+<p><strong>Q14) Hoeveel bloemen zijn er gemeten? Hoeveel eigenschappen
+zijn er gemeten?</strong></p>
+<p><strong>(OPTIONAL) Q15) Welke bloemensoorten zijn er gemeten en hoe
+vaak komt elk soort voor in de data?</strong></p>
+</div>
+<div id="subset" class="section level2">
+<h2>Subset</h2>
+<p><strong>Q16) Maak een nieuwe subset met alleen de eerste 10 bloemen
+uit <code>iris_dataset</code>.</strong></p>
+<p><strong>Q17) Maak een nieuwe subset met 20 bloemen willekeurig
+ge-sampled uit <code>iris_dataset</code>.</strong></p>
+<p><strong>Q18) Maak een nieuwe subset met alle bloemen uit
+<code>iris_dataset</code> die <code>sepal_length</code> groter dan
+<code>7</code> hebben.</strong></p>
+<p><strong>Q19a) Zoek de Logical Operators op (met bijv.
+<code>?"!"</code>). Hoe selecteer je alle bloemen uit
+<code>iris_dataset</code> die <code>sepal_length</code> kleiner dan 6
+hebben OF <code>sepal_width</code> groter dan 3 hebben?</strong></p>
+<p><strong>Q19b) Hoeveel rows selecteer je in vraag Q19a? Oftewel,
+hoeveel bloemen voldoen aan de gestelde criteria?</strong></p>
+</div>
+<div id="plot" class="section level2">
+<h2>Plot</h2>
+<p><strong>Q20) Plot <code>sepal_length</code> tegen
+<code>sepal_width</code>. Welk type plot zou je maken in dit
+geval?</strong></p>
+<p><strong>Q21) Plot <code>sepal_length</code> per <code>flower</code>
+groep. Welk type plot zou je maken in dit geval?</strong></p>
+<p><strong>(OPTIONAL) Q22) Maak een aparte plot voor
+<code>sepal_length</code> tegen <code>sepal_width</code> in de
+<code>Iris-virginica</code> bloemen. Hoe maak je de juiste
+subset?</strong></p>
+</div>
+<div id="in-operator" class="section level2">
+<h2>%in% Operator</h2>
+<p><strong>Q23) Gebruik de <code>%in%</code> operator om te bepalen
+welke elementen van <code>query</code> aanwezig zijn in
+<code>data</code>.</strong></p>
+<pre class="r"><code>data  &lt;- (1:10)^2 / 4
+query &lt;- c(3, 4, 7)</code></pre>
+</div>
+<div id="iteratie" class="section level2">
+<h2>Iteratie</h2>
+<p>Soms wil je een functie uitvoeren op elk element van een bepaalde
+sequentie. Het is niet praktisch dezelfde code daadwerkelijk te herhalen
+voor elk element. Gelukkig bestaan er loop functies zoals
+<code>apply()</code>, <code>lapply()</code>, <code>sapply()</code>, etc.
+die een opgegeven functie meerdere keren uitvoeren.</p>
+<pre class="r"><code>M &lt;- matrix(1:16, 4)
+M</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    5    9   13
+## [2,]    2    6   10   14
+## [3,]    3    7   11   15
+## [4,]    4    8   12   16</code></pre>
+<p><strong>Q24) Gebruik de matrix <code>M</code> hierboven. Bereken het
+gemiddelde van elke row in <code>M</code> met behulp van
+<code>apply()</code> en specificeer de functie
+<code>mean</code>.</strong></p>
+<p><strong>Q25) Bereken het gemiddelde van elke column in <code>M</code>
+met behulp van <code>apply()</code> en de functie
+<code>mean</code>.</strong></p>
+<p><strong>(OPTIONAL DIFFICULT) Q26) Bereken het gemiddelde van elke
+column van de <code>iris_dataset</code>. Welke <code>apply()</code>
+functie kun je hier gebruiken? Waarom geeft de <code>flower</code>
+column <code>NA</code>?</strong></p>
+<p>For-loops zijn constructies in R om hele regels code meerdere keren
+uit te voeren. Ze beginnen met een regel die aangeeft dat de code tussen
+de curly bracket herhaald moet worden voor elk element van de opgegeven
+sequentie.</p>
+<p><strong>Q27) Hoeveel iteraties worden uitgevoerd in dit volgende
+voorbeeld? Beschrijf wat er gebeurt in elke iteratie van deze
+for-loop.</strong></p>
+<pre class="r"><code>countdown &lt;- 3:1
+countdown</code></pre>
+<pre><code>## [1] 3 2 1</code></pre>
+<pre class="r"><code>for (i in countdown){
+  print(i)
+  print(&quot;...&quot;)
+}</code></pre>
+<pre><code>## [1] 3
+## [1] &quot;...&quot;
+## [1] 2
+## [1] &quot;...&quot;
+## [1] 1
+## [1] &quot;...&quot;</code></pre>
+<p><strong>Q28) Leg in eigen woorden uit wat er precies gebeurt in dit
+volgende voorbeeld.</strong></p>
+<pre class="r"><code>LETTERS # Het alfabet</code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;J&quot; &quot;K&quot; &quot;L&quot; &quot;M&quot; &quot;N&quot; &quot;O&quot;
+## [16] &quot;P&quot; &quot;Q&quot; &quot;R&quot; &quot;S&quot; &quot;T&quot; &quot;U&quot; &quot;V&quot; &quot;W&quot; &quot;X&quot; &quot;Y&quot; &quot;Z&quot;</code></pre>
+<pre class="r"><code>totaal &lt;- 0
+# We tellen elke letter van het alphabet
+for (letter in LETTERS){
+  totaal &lt;- totaal + 1
+  print(totaal)
+  print(letter)
+}</code></pre>
+<pre><code>## [1] 1
+## [1] &quot;A&quot;
+## [1] 2
+## [1] &quot;B&quot;
+## [1] 3
+## [1] &quot;C&quot;
+## [1] 4
+## [1] &quot;D&quot;
+## [1] 5
+## [1] &quot;E&quot;
+## [1] 6
+## [1] &quot;F&quot;
+## [1] 7
+## [1] &quot;G&quot;
+## [1] 8
+## [1] &quot;H&quot;
+## [1] 9
+## [1] &quot;I&quot;
+## [1] 10
+## [1] &quot;J&quot;
+## [1] 11
+## [1] &quot;K&quot;
+## [1] 12
+## [1] &quot;L&quot;
+## [1] 13
+## [1] &quot;M&quot;
+## [1] 14
+## [1] &quot;N&quot;
+## [1] 15
+## [1] &quot;O&quot;
+## [1] 16
+## [1] &quot;P&quot;
+## [1] 17
+## [1] &quot;Q&quot;
+## [1] 18
+## [1] &quot;R&quot;
+## [1] 19
+## [1] &quot;S&quot;
+## [1] 20
+## [1] &quot;T&quot;
+## [1] 21
+## [1] &quot;U&quot;
+## [1] 22
+## [1] &quot;V&quot;
+## [1] 23
+## [1] &quot;W&quot;
+## [1] 24
+## [1] &quot;X&quot;
+## [1] 25
+## [1] &quot;Y&quot;
+## [1] 26
+## [1] &quot;Z&quot;</code></pre>
+<pre class="r"><code>totaal</code></pre>
+<pre><code>## [1] 26</code></pre>
+<hr />
+</div>
+<div id="installeer-de-r-packages" class="section level1">
+<h1>Installeer de R packages</h1>
+<p><strong>Download install_bioinf.R en open het bestand in RStudio.
+Volg de instructies in dat script.</strong></p>
+<a href="data:text/plain;base64,IyMjIElOU1RSVUNUSUUKCiMgR2VicnVpayBbY3RybF0rW3NoaWZ0XStbc10gb3AgamUgdG9ldHNlbmJvcmQgb20gZGl0IGNvbXB1dGVyc2NyaXB0IHVpdCB0ZSB2b2VyZW4uCiMgT0Yga2xpayBpbiBkZSB0b29sYmFyIGJvdmVuaW46IENvZGUgPiBTb3VyY2UuCgojIEFscyAiVXBkYXRlIGFsbC9zb21lL25vbmU/IFthL3Mvbl06IiBpbiBjb25zb2xlIHZlcnNjaGlqbnQsIHR5cGUgIm4iIGVuIGRydWsgW2VudGVyXS4gQWxzIGRpdCBub2cgc3RlZWRzIG5pZXQgd2Vya3QgcHJvYmVlciBkYW4gb3BuaWV1dyBtZXQgImEiIGVuIFtlbnRlcl0uCgojIFJvZGUgYmVyaWNodGVuIGluIGNvbnNvbGUgbWV0ICJlcnJvciIgemlqbiBiZWxhbmdyaWprLgoKIyBBbGxlIG5vZGlnZSBwYWNrYWdlcyB6aWpuIGdlw69uc3RhbGxlZXJkIGVuIGluZ2VsYWRlbiBhbHMgbmEgaGV0IHVpdHZvZXJlbiB2YW4gZGUgY29kZSAiISEhIEFsbCBwYWNrYWdlcyBpbnN0YWxsZWQgISEhIiBpbiBjb25zb2xlIHN0YWF0LgoKCgpSLnZlcnNpb24KCiMjIyBSIFBBQ0tBR0VTCgpwYWNrIDwtIGMoImRldnRvb2xzIiwgImdwbG90cyIsICJnZ3Bsb3QyIiwgInFxbWFuIiwgInBseXIiLCAiZHBseXIiLCAidGlkeXZlcnNlIiwgIm1hZ3JpdHRyIiwgImhkZjVyIiwgInN0cmluZ3IiLCAiUkNvbG9yQnJld2VyIiwgInVzZWZ1bCIsICJyZWFkciIsICJmYWN0b2V4dHJhIiwgIlNldXJhdCIsICJjYXJldCIsICJjbGFzcyIsICJyYW5kb21Gb3Jlc3QiLCAiZTEwNzEiKQoKZm9yIChpIGluIHBhY2spCiAgewogIGNhdChpLCAiXG4iKQogIGlmICghcmVxdWlyZShpLCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKXsKICAgIGluc3RhbGwucGFja2FnZXMoaSwgZGVwZW5kZW5jaWVzID0gVFJVRSkKICAgICMgaW5zdGFsbC5wYWNrYWdlcyhpLCBkZXBlbmRlbmNpZXMgPSBUUlVFLCByZXBvcyA9ICJodHRwOi8vY3Jhbi51cy5yLXByb2plY3Qub3JnIikKICB9CiAgbGlicmFyeShpLCBjaGFyYWN0ZXIub25seSA9IFRSVUUpCn0KCmlmICghcmVxdWlyZU5hbWVzcGFjZSgiQmlvY01hbmFnZXIiLCBxdWlldGx5ID0gVFJVRSkpCiAgIGluc3RhbGwucGFja2FnZXMoIkJpb2NNYW5hZ2VyIikKIyBCaW9jTWFuYWdlcjo6aW5zdGFsbCh2ZXJzaW9uID0gIjMuMTYiKQoKYmlvYyA8LSBjKCJyaGRmNSIsICJERVNlcTIiLCAiTXV0YXRpb25hbFBhdHRlcm5zIiwgIkJTZ2Vub21lLkhzYXBpZW5zLlVDU0MuaGcxOSIpCgpmb3IgKGogaW4gYmlvYykKewogIGNhdChqLCAiXG4iKQogIGlmICghcmVxdWlyZShqLCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKXsKICAgIEJpb2NNYW5hZ2VyOjppbnN0YWxsKGosIGRlcGVuZGVuY2llcyA9IFRSVUUpCiAgfQogIGxpYnJhcnkoaiwgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKQp9CgpjYXQoIiEhISBBbGwgcGFja2FnZXMgaW5zdGFsbGVkICEhISIpCg==" download="install_bioinf.R">Download install_bioinf.R</a>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -10,19 +10,6 @@ Within the Biomedical Sciences, working with big data sets becomes more and more
 
 Following the different COOs (computer modules), you will install R and Rstudio and get acquainted with the basics of programming in R, after which you will use the programming to perform statistical analyses. 
 
-- [COO 1](COO1.html) focuses on installing R and Rstudio, using R as a calculator, and the various objects that can be made and used in R.
-- In [COO 2](COO2.html), you will learn how to import data, how to select data, how to sort and order data, and lastly how to handle missing values.
-- In [COO 3](COO3.html), the main focus is on visualization of data with R. 
-- In [COO 4](COO4.html), you will learn about descriptive statistics in R.
-
-When the basics in R are covered, you will be introduced into different types of statistical analyses in R:
-
-- In [WC statistiek Thema 1](Werkcollege_statistiek_Thema_1.html), you'll learn about the 95% confidence interval.   
-- In [WC statistiek Thema 2](Werkcollege_statistiek_Thema_2.html), linear regression and prediction will be taught.  
-- In [WC statistiek Thema 3](Werkcollege_statistiek_Thema_3.html), the topic of the students' t-test will be discussed. 
-
-Learning R can be difficult in the beginning, but also very exciting when you keep trying and succeed. 
-
 Good luck!
 
 On behalf of all involved teachers,

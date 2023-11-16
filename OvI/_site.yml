@@ -1,0 +1,12 @@
+name: "Oog voor Impact"
+output_dir: "../docs/OvI/"
+navbar:
+  title: "Oog voor Impact"
+  left:
+    - text: "Leerlijn DS"
+      href: https://umcugenetics.github.io/BachelorBMW
+    - text: "PLACEHOLDER"
+      href: placeholder.html
+output:
+  html_document:
+    theme: cosmo

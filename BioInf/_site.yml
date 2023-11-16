@@ -1,0 +1,14 @@
+name: "Bioinformatica"
+output_dir: "../docs/BioInf/"
+navbar:
+  title: "Bioinformatica"
+  left:
+    - text: "Leerlijn DS"
+      href: https://umcugenetics.github.io/BachelorBMW
+    - text: "COO-R"
+      href: COO-R.html
+    - text: "PLACEHOLDER"
+      href: placeholder.html
+output:
+  html_document:
+    theme: cosmo

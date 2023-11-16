@@ -1,0 +1,192 @@
+---
+title: "COO R"
+author: "T Huisman"
+date: "2/2/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Intro
+
+Voorkennis is terug te zien op **Blackboard >> Course content >> Voorkennis >> Onderzoeksmethoden**. Zie ook de cheatsheet op Blackboard.
+
+In de volgende onderdelen gaan we over de basics van R. Vergeet niet dat je zelf het een en ander kunt opzoeken over R code en functies. De Help Panel van Rstudio kan het gebruik van specifieke functies verder toelichten.
+
+**Werk in de code editor en sla je R code op in een bestand, zodat je uiteindelijk een volledig script hebt.** Je kunt stukken code uit dit document kopiëren en in je script plakken. Voeg commentaar toe waar nodig.
+
+## Outline
+
+* **(Algemeen)**
+  - De student kan een basic R script opstellen en bewerken in Rstudio
+  - De student kan plots, data, en scripts opslaan en beheren
+* **Variabelen en Data Structuren**
+  - De student kan variabelen aanmaken en gebruiken
+* **Functies**
+  - De student kan functies toepassen en de juiste argumenten invullen
+* **Data Inladen**
+  - De student kan verschillende data bestanden inladen
+* **Subset**
+  - De student kan een subset of selectie maken uit data
+* **Plot**
+  - De student kan simpele plots maken en instellen
+* **%in% Operator**
+  - De student begrijpt de %in% operator
+* **Iteratie**
+  - De student kan looping functies `apply()`, `lapply()`, `sapply()`, etc. toepassen
+  - De student begrijpt simpele for-loops en kan ze uitleggen en aanpassen
+
+## Variabelen en Data Structuren
+
+Variabelen zijn eenvoudig te maken en te gebruiken.
+
+```{r}
+foobar <- "Hello, World!"
+foobar
+```
+
+**Q1) Maak een vector met nummers van 1 tot en met 10 en sla deze op in een variable met de naam `numbers`.**
+
+**Q2) Vermenigvuldig de variabele `numbers` met `2` en sla de uitkomst op in een nieuwe variabele met de naam `numbers2`.**
+
+**Q3) Maak een vector met de character waarden: `"alpha"`, `"beta"`, `"gamma"`.**
+
+**Q4) Maak een matrix van 3x3 met de nummers 1 tot en met 9 van links naar rechts en boven naar onder (net als een telefoon keypad). De output moet eruitzien zoals hieronder weergegeven:**
+
+```{r, echo=F}
+matrix(1:9, 3, byrow = TRUE)
+```
+
+**(OPTIONAL) Q5) Er zijn vaak meerdere manieren om iets te maken in R. Het is mogelijk om met elk van de de volgende functies de matrix te bouwen: `matrix()`, `rbind()`, en `cbind()`. Geef de code voor iedere afzonderlijke functie met de output die is weergegeven bij vraag Q4.**
+
+**Q6) Maak een list met een combinatie van `"numeric"`, `"character"`, en `"logical"` type waarden.**
+
+**(OPTIONAL) Q7) Maak een list met nummers 0 tot en met 9 als element `[[1]]` en letters A tot en met Z als element `[[2]]`. De output moet eruitzien zoals hieronder weergegeven. Let op, er is al een vector met de letters van het alfabet ingebouwd in R. Zoek naar Constants in de R helpdocumentatie (`?Constants`).**
+
+```{r, echo=F}
+list(0:9, LETTERS)
+```
+
+**Q8) Maak een data.frame zoals hieronder weergegeven. Column `Name` moet `"character"` type zijn. Column `Grade` moet `"numeric"` type zijn.**
+
+```{r, echo=F}
+data.frame(Name = c("Tom", "Jerry", "Spike"), Grade = c(8.2, 4.6, 7.1))
+```
+
+## Functies
+
+Het is belangrijk de juiste functies en argumenten te gebruiken.
+
+**Q9) Maak met behulp van een bestaande functie een vector met nummers die start op `7` en eindigt op `63` in stappen van `7`.**
+
+Dit volgende voorbeeld genereert een willekeurig getal tussen `5` en `99`.
+
+```{r}
+sample(5:99, 1)
+```
+
+**Q10) Zoek de help documentatie van `sample()` op. Hoe kunnen we in één keer `150` zulke willekerige getallen uit de `5:99` sequentie sampelen? Welke argumenten moeten we aan de functie meegeven (en waarom)?**
+
+**Q11) Wat doet de `rev()` functie?**
+
+## Data Inladen
+
+Het inladen van data is vaak het begin van onderzoek in R. Het is belangrijk dat we goed beginnen. Hier gebruiken we de `iris_dataset.csv`:
+
+**Blackboard >> Course content >> Intro R - herhaling >> `iris_dataset.csv`**
+
+**Q12) Laad de `iris_dataset.csv` in. Wat is de separator character? Is er een header line?**
+
+**Q13) Inspecteer de data met functies als `head()` en `str()`. Is het goed ingeladen?**
+
+**Q14) Hoeveel bloemen zijn er gemeten? Hoeveel eigenschappen zijn er gemeten?**
+
+**(OPTIONAL) Q15) Welke bloemensoorten zijn er gemeten en hoe vaak komt elk soort voor in de data?**
+
+## Subset
+
+**Q16) Maak een nieuwe subset met alleen de eerste 10 bloemen uit `iris_dataset`.**
+
+**Q17) Maak een nieuwe subset met 20 bloemen willekeurig ge-sampled uit `iris_dataset`.**
+
+**Q18) Maak een nieuwe subset met alle bloemen uit `iris_dataset` die `sepal_length` groter dan `7` hebben.**
+
+**Q19a) Zoek de Logical Operators op (met bijv. `?"!"`). Hoe selecteer je alle bloemen uit `iris_dataset` die `sepal_length` kleiner dan 6 hebben OF `sepal_width` groter dan 3 hebben?**
+
+**Q19b) Hoeveel rows selecteer je in vraag Q19a? Oftewel, hoeveel bloemen voldoen aan de gestelde criteria?**
+
+## Plot
+
+**Q20) Plot `sepal_length` tegen `sepal_width`. Welk type plot zou je maken in dit geval?**
+
+**Q21) Plot `sepal_length` per `flower` groep. Welk type plot zou je maken in dit geval?**
+
+**(OPTIONAL) Q22) Maak een aparte plot voor `sepal_length` tegen `sepal_width` in de `Iris-virginica` bloemen. Hoe maak je de juiste subset?**
+
+## %in% Operator
+
+**Q23) Gebruik de `%in%` operator om te bepalen welke elementen van `query` aanwezig zijn in `data`.**
+
+```{r}
+data  <- (1:10)^2 / 4
+query <- c(3, 4, 7)
+```
+
+## Iteratie
+
+Soms wil je een functie uitvoeren op elk element van een bepaalde sequentie. Het is niet praktisch dezelfde code daadwerkelijk te herhalen voor elk element. Gelukkig bestaan er loop functies zoals `apply()`, `lapply()`, `sapply()`, etc. die een opgegeven functie meerdere keren uitvoeren.
+
+```{r}
+M <- matrix(1:16, 4)
+M
+```
+
+**Q24) Gebruik de matrix `M` hierboven. Bereken het gemiddelde van elke row in `M` met behulp van `apply()` en specificeer de functie `mean`.**
+
+**Q25) Bereken het gemiddelde van elke column in `M` met behulp van `apply()` en de functie `mean`.**
+
+**(OPTIONAL DIFFICULT) Q26) Bereken het gemiddelde van elke column van de `iris_dataset`. Welke `apply()` functie kun je hier gebruiken? Waarom geeft de `flower` column `NA`?**
+
+For-loops zijn constructies in R om hele regels code meerdere keren uit te voeren. Ze beginnen met een regel die aangeeft dat de code tussen de curly bracket herhaald moet worden voor elk element van de opgegeven sequentie.
+
+**Q27) Hoeveel iteraties worden uitgevoerd in dit volgende voorbeeld? Beschrijf wat er gebeurt in elke iteratie van deze for-loop.**
+
+```{r}
+countdown <- 3:1
+countdown
+
+for (i in countdown){
+  print(i)
+  print("...")
+}
+```
+
+**Q28) Leg in eigen woorden uit wat er precies gebeurt in dit volgende voorbeeld.**
+
+```{r}
+LETTERS # Het alfabet
+
+totaal <- 0
+# We tellen elke letter van het alphabet
+for (letter in LETTERS){
+  totaal <- totaal + 1
+  print(totaal)
+  print(letter)
+}
+
+totaal
+```
+
+***
+
+# Installeer de R packages
+
+**Download install_bioinf.R en open het bestand in RStudio. Volg de instructies in dat script.**
+
+
+```{r, echo = FALSE}
+# a single file
+xfun::embed_file('install_bioinf.R')
+```
